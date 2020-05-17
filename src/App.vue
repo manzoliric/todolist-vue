@@ -10,10 +10,15 @@
         :class="{ 'task__list-item__done': task.done }"
       >
         <input type="checkbox" :checked="task.done" v-model="task.done" />
-        {{ task.title }}
-        <button class="task__button">
-          <EditIcon class="task__svg" />
-        </button>
+        <input
+          v-if="task.edit"
+          v-model="task.title"
+          @keyup.enter="editTask(task, false)"
+          @blur="editTask(task, false)"
+          class="task__list-item__edit"
+          v-focus
+        />
+        <label @click="editTask(task, true)" v-else> {{ task.title }} </label>
         <button class="task__button">
           <DeleteIcon class="task__svg" @click="deleteTask(task.id)" />
         </button>
@@ -23,7 +28,6 @@
 </template>
 
 <script>
-import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
 
 export default {
@@ -31,22 +35,24 @@ export default {
   data() {
     return {
       newTaskValue: null,
+      editedTask: null,
       tasks: [
         {
           id: 1,
           title: 'Create a todo list',
+          edit: false,
           done: false
         },
         {
           id: 2,
           title: ' Create a task',
+          edit: false,
           done: false
         }
       ]
     };
   },
   components: {
-    EditIcon,
     DeleteIcon
   },
   methods: {
@@ -56,10 +62,15 @@ export default {
       const task = {
         id: this.createRandomID(),
         title: this.newTaskValue,
+        edit: false,
         done: false
       };
 
       this.tasks.push(task);
+    },
+
+    editTask(task, handlerEdit) {
+      task.edit = handlerEdit;
     },
 
     deleteTask(taskID) {
@@ -76,6 +87,13 @@ export default {
           Math.round(performance.now())
         ).toString(36)
       );
+    }
+  },
+  directives: {
+    focus: {
+      inserted(el) {
+        el.focus();
+      }
     }
   }
 };
@@ -96,6 +114,11 @@ export default {
 
       &__done {
         text-decoration: line-through;
+      }
+
+      &__edit {
+        border: none;
+        font-size: 16px;
       }
     }
   }
