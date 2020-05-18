@@ -1,6 +1,11 @@
 <template>
   <div class="tasks">
-    <input type="text" class="tasks__input" v-model="newTaskTitle" />
+    <input
+      type="text"
+      class="tasks__input"
+      :class="{ 'tasks__input--error': showInputError }"
+      v-model="newTaskTitle"
+    />
     <button class="tasks__button" @click="createTask">
       Create Task
     </button>
@@ -17,7 +22,8 @@ export default {
   name: 'tasks',
   data() {
     return {
-      newTaskTitle: null
+      newTaskTitle: null,
+      showInputError: false
     };
   },
   props: {
@@ -30,7 +36,12 @@ export default {
   components: { Task },
   methods: {
     createTask() {
-      if (!this.newTaskTitle) return;
+      if (!this.newTaskTitle) {
+        this.showInputError = true;
+        return;
+      }
+
+      this.showInputError = false;
 
       const task = {
         id: this.createRandomID(),
@@ -40,6 +51,8 @@ export default {
       };
 
       this.tasks.push(task);
+
+      this.newTaskTitle = '';
     },
     createRandomID() {
       return (
@@ -65,6 +78,10 @@ export default {
     border: 1px solid #e2e2e2;
     padding-left: 16px;
     border-radius: 4px;
+
+    &--error {
+      border-color: red;
+    }
   }
 
   &__button {

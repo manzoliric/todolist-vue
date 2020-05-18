@@ -4,7 +4,7 @@
       class="task"
       v-for="task in tasks"
       :key="task.id"
-      :class="{ 'task++done': task.done }"
+      :class="{ task__done: task.done }"
     >
       <input type="checkbox" :checked="task.done" v-model="task.done" />
       <input
