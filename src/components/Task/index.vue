@@ -4,7 +4,7 @@
       class="task"
       v-for="task in tasks"
       :key="task.id"
-      :class="{ task__done: task.done }"
+      :class="{ 'task--done': task.done }"
     >
       <input type="checkbox" :checked="task.done" v-model="task.done" />
       <input
@@ -16,9 +16,7 @@
         v-focus
       />
       <label @click="editTask(task, true)" v-else> {{ task.title }} </label>
-      <button class="task__button">
-        <DeleteIcon class="task__svg" @click="deleteTask(task.id)" />
-      </button>
+      <DeleteIcon class="task__svg" @click="deleteTask(task.id)" />
     </li>
   </div>
 </template>
@@ -61,9 +59,14 @@ export default {
 
 <style lang="scss">
 .task {
+  background: #fff;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 8px;
 
-  &__done {
+  &--done {
     text-decoration: line-through;
   }
 
@@ -74,14 +77,13 @@ export default {
 
   &__svg {
     height: 20px;
-    fill: black;
+    fill: #7d7d7d;
   }
 
   &__button {
     height: 30px;
     background: none;
-    border-radius: 4px;
-    margin: 0 4px;
+    border: none;
   }
 }
 </style>

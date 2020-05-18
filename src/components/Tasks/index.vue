@@ -1,5 +1,8 @@
 <template>
   <div class="tasks">
+    <ul class="tasks__list">
+      <Task :tasks="tasks" @update:tasks="$emit('update:tasks', $event)" />
+    </ul>
     <input
       type="text"
       class="tasks__input"
@@ -7,11 +10,8 @@
       v-model="newTaskTitle"
     />
     <button class="tasks__button" @click="createTask">
-      Create Task
+      + New Task
     </button>
-    <ul class="tasks__list">
-      <Task :tasks="tasks" @update:tasks="$emit('update:tasks', $event)" />
-    </ul>
   </div>
 </template>
 
@@ -87,7 +87,8 @@ export default {
   &__button {
     height: 30px;
     background: none;
-    border-radius: 4px;
+    border-radius: 50px;
+    border: 1px solid pink;
     margin: 0 4px;
   }
 }
