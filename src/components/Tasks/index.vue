@@ -1,22 +1,27 @@
 <template>
   <div class="tasks">
+    <h1 class="tasks__title">Tasks</h1>
     <ul class="tasks__list">
       <Task :tasks="tasks" @update:tasks="$emit('update:tasks', $event)" />
     </ul>
-    <input
-      type="text"
-      class="tasks__input"
-      :class="{ 'tasks__input--error': showInputError }"
-      v-model="newTaskTitle"
-    />
+
+    <Modal>
+      <input
+        type="text"
+        class="tasks__input"
+        :class="{ 'tasks__input--error': showInputError }"
+        v-model="newTaskTitle"
+      />
+    </Modal>
     <button class="tasks__button" @click="createTask">
-      + New Task
+      New task
     </button>
   </div>
 </template>
 
 <script>
 import Task from '../Task';
+import Modal from '../Modal';
 
 export default {
   name: 'tasks',
@@ -33,7 +38,7 @@ export default {
       required: true
     }
   },
-  components: { Task },
+  components: { Task, Modal },
   methods: {
     createTask() {
       if (!this.newTaskTitle) {
@@ -46,7 +51,6 @@ export default {
       const task = {
         id: this.createRandomID(),
         title: this.newTaskTitle,
-        edit: false,
         done: false
       };
 
@@ -69,6 +73,12 @@ export default {
 </script>
 <style lang="scss">
 .tasks {
+  &__title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
   &__list {
     list-style: none;
   }
@@ -85,11 +95,15 @@ export default {
   }
 
   &__button {
-    height: 30px;
-    background: none;
-    border-radius: 50px;
-    border: 1px solid pink;
-    margin: 0 4px;
+    height: 40px;
+    width: 100%;
+    color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #006cff;
+    font-size: 18px;
+    border: 0;
   }
 }
 </style>

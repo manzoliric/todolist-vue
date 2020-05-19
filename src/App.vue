@@ -15,13 +15,11 @@ export default {
         {
           id: 1,
           title: 'Create a todo list',
-          edit: false,
           done: false
         },
         {
           id: 2,
           title: ' Create a task',
-          edit: false,
           done: false
         }
       ]
@@ -35,8 +33,6 @@ export default {
 <style lang="scss">
 .app {
   font-family: 'Open Sans', sans-serif;
-  max-width: 768px;
-  margin: auto;
-  text-align: center;
+  padding: 10px;
 }
 </style>
