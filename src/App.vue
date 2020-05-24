@@ -10,23 +10,15 @@ import Tasks from './components/Tasks';
 export default {
   name: 'App',
   data() {
-    return {
-      tasks: [
-        {
-          id: 1,
-          title: 'Create a todo list',
-          done: false
-        },
-        {
-          id: 2,
-          title: ' Create a task',
-          done: false
-        }
-      ]
-    };
+    return {};
   },
   components: {
     Tasks
+  },
+  computed: {
+    tasks() {
+      return this.$store.getters.getAllTasks;
+    }
   }
 };
 </script>

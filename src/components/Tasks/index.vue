@@ -65,7 +65,7 @@ export default {
         done: false
       };
 
-      this.tasks.push(task);
+      this.$store.dispatch('createAction', task);
 
       this.newTaskTitle = '';
       this.showNewTaskModal = false;

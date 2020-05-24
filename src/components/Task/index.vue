@@ -9,9 +9,9 @@
       <input
         type="checkbox"
         :id="task.id"
-        class="task__checkbox"
         :checked="task.done"
-        v-model="task.done"
+        class="task__checkbox"
+        @input="finishTask(task, $event)"
       />
       <label class="task__label" :for="task.id">
         {{ task.title }}
@@ -40,15 +40,11 @@ export default {
   methods: {
     deleteTask(taskID) {
       const tasks = this.tasks.filter((task) => taskID != task.id);
-
-      this.$emit('update:tasks', tasks);
-    }
-  },
-  directives: {
-    focus: {
-      inserted(el) {
-        el.focus();
-      }
+      this.$store.dispatch('deleteAction', tasks);
+    },
+    finishTask(task, event) {
+      task.done = event.target.checked;
+      this.$store.dispatch('finishAction', task);
     }
   }
 };
