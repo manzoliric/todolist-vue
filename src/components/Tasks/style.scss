@@ -1,0 +1,53 @@
+.tasks {
+  &__title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__input {
+    background: #fff;
+    font-size: 18px;
+    border: none;
+    border-bottom: 1px solid #efe8e8;
+    width: 100%;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+
+    &--error {
+      border-color: red;
+    }
+  }
+
+  &__button {
+    height: 40px;
+    width: 100%;
+    color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #006cff;
+    font-size: 18px;
+    border: 0;
+  }
+
+  &__create {
+    &-button {
+      height: 40px;
+      width: 100%;
+      color: #ffffff;
+      background: #006cff;
+      font-size: 18px;
+      border: 0;
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    font-size: 18px;
+  }
+}

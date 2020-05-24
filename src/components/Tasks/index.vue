@@ -1,19 +1,25 @@
 <template>
   <div class="tasks">
     <h1 class="tasks__title">Tasks</h1>
-    <ul class="tasks__list">
+    <ul class="tasks__list" v-if="tasks.length">
       <Task :tasks="tasks" @update:tasks="$emit('update:tasks', $event)" />
     </ul>
+    <p class="tasks__empty" v-else>
+      no task created
+    </p>
 
-    <Modal>
+    <Modal :active.sync="showNewTaskModal">
+      <h1 class="tasks__title">Create task</h1>
       <input
         type="text"
         class="tasks__input"
         :class="{ 'tasks__input--error': showInputError }"
         v-model="newTaskTitle"
+        placeholder="Init new project..."
       />
+      <button class="tasks__create-button" @click="createTask">Create</button>
     </Modal>
-    <button class="tasks__button" @click="createTask">
+    <button class="tasks__button" @click="handleCreateTaskModal">
       New task
     </button>
   </div>
@@ -22,13 +28,15 @@
 <script>
 import Task from '../Task';
 import Modal from '../Modal';
+import './style.scss';
 
 export default {
   name: 'tasks',
   data() {
     return {
       newTaskTitle: null,
-      showInputError: false
+      showInputError: false,
+      showNewTaskModal: false
     };
   },
   props: {
@@ -40,6 +48,9 @@ export default {
   },
   components: { Task, Modal },
   methods: {
+    handleCreateTaskModal() {
+      this.showNewTaskModal = true;
+    },
     createTask() {
       if (!this.newTaskTitle) {
         this.showInputError = true;
@@ -57,6 +68,7 @@ export default {
       this.tasks.push(task);
 
       this.newTaskTitle = '';
+      this.showNewTaskModal = false;
     },
     createRandomID() {
       return (
@@ -71,39 +83,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.tasks {
-  &__title {
-    font-family: 'Nunito', sans-serif;
-    font-size: 32px;
-    margin-bottom: 24px;
-  }
-
-  &__list {
-    list-style: none;
-  }
-
-  &__input {
-    height: 30px;
-    border: 1px solid #e2e2e2;
-    padding-left: 16px;
-    border-radius: 4px;
-
-    &--error {
-      border-color: red;
-    }
-  }
-
-  &__button {
-    height: 40px;
-    width: 100%;
-    color: #ffffff;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: #006cff;
-    font-size: 18px;
-    border: 0;
-  }
-}
-</style>
